@@ -1,10 +1,15 @@
-﻿namespace HtTemplate.Catalog;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace HtTemplate.Catalog;
 
 public class AddingSoftwareController : ControllerBase
 {
-    [HttpPost("/vendors/7473ee24-54d2-48f4-8e84-d240d65e4b16/catalog")]
+    [HttpPost("/vendors/{vendorId:guid}/catalog")]
+    [Authorize]
     public async Task<ActionResult> CanAddSoftware(
-        [FromBody] CatalogCreateModel request
+        [FromBody] CatalogCreateModel request,
+        [FromRoute] Guid vendorId,
+        [FromServices] TimeProvider timeProvider
         )
     {
 
@@ -13,6 +18,9 @@ public class AddingSoftwareController : ControllerBase
         {
             Name = request.Name,
             Description = request.Description,
+            VendorId = vendorId,
+            AddedToCatalog = timeProvider.GetLocalNow(),
+            AddedBy = User.Identity.Name
         };
         return Ok(response);
     }

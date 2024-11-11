@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+      <UserSecretsId>bcdd2281-e78a-4acf-8ba6-bf0a0162d570</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="6.0.0" />

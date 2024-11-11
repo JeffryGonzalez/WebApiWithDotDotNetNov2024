@@ -12,6 +12,8 @@ public record CatalogItemResponseModel
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 
+    public Guid VendorId { get; set; }
+
     public DateTimeOffset AddedToCatalog { get; set; }
     public string AddedBy { get; set; } = string.Empty;
 
