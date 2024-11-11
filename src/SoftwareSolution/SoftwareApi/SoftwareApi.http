@@ -1,0 +1,12 @@
+@Api_HostAddress = http://localhost:1337
+
+
+
+###
+POST {{Api_HostAddress}}/vendors/7473ee24-54d2-48f4-8e84-d240d65e4b16/catalog
+Content-Type: application/json
+
+{
+   
+    "description": "An editor for programmers"  
+}
