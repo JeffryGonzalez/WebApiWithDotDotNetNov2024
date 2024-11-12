@@ -1,18 +1,39 @@
-﻿namespace Software.Api.Vendors;
+﻿using Microsoft.AspNetCore.Authorization;
 
-public class VendorsApi
+namespace Software.Api.Vendors;
+
+public class VendorsApi(VendorManager vendorManager) : ControllerBase
 {
-}
+    [HttpPost("/vendors")]
+    [Authorize(Policy = "IsSoftwareManager")]
+    public async Task<ActionResult> AddVendorAsync([FromBody] VendorCreateModel request, [FromServices] VendorCreateModelValidator validator)
+    {
+
+        var validations = await validator.ValidateAsync(request);
+
+        if (!validations.IsValid)
+        {
+            return BadRequest();
+        }
+        var response = await vendorManager.AddVendorAsync(request);
+        return Ok(response);
+    }
+
+    [HttpGet("/vendors/{id:guid}")]
+    public async Task<ActionResult> GetVendorById(Guid id)
+    {
+
+        VendorResponseModel? response = await vendorManager.GetVendorByIdAsync(id);
 
 
-public record VendorCreateModel
-{
-    public string Name { get; init; } = string.Empty;
+        if (response is null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            return Ok(response);
+        }
+    }
 
-}
-
-public record VendorResponseModel
-{
-    public Guid Id { get; set; }
-    public string Name { get; init; } = string.Empty;
 }

@@ -2,6 +2,7 @@ using FluentValidation;
 using Marten;
 using Software.Api.Catalog;
 using Software.Api.Configuration;
+using Software.Api.Vendors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +15,15 @@ builder.Services.AddCustomOasGeneration();
 
 builder.Services.AddControllers();
 
+// TODO: Refactor This to an Extension Method.
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("IsSoftwareCenter", policy =>
     {
         policy.RequireRole("software-center");
+    })
+    .AddPolicy("IsSoftwareManager", policy =>
+    {
+        policy.RequireRole("software-center-admin");
     });
 
 var connectionString = builder.Configuration.GetConnectionString("software") ??
@@ -31,7 +37,7 @@ builder.Services.AddMarten(config =>
 builder.Services.AddValidatorsFromAssemblyContaining<CatalogCreateModelValidator>();
 
 builder.Services.AddScoped<CatalogManager>(); // 99% of the time you want "Scoped"
-
+builder.Services.AddScoped<VendorManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

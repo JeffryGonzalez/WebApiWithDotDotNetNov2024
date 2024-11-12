@@ -28,8 +28,9 @@ public class AddingVendors
         // She does this by posting some json to the /vendors resource.
         var postResponse = await host.Scenario(api =>
         {
+
             api.Post.Json(vendorToAdd).ToUrl("/vendors");
-            api.StatusCodeShouldBeOk();
+            api.StatusCodeShouldBeSuccess(); // Thank to this PR https://github.com/JasperFx/alba/pull/161
         });
 
         Assert.NotNull(postResponse);
