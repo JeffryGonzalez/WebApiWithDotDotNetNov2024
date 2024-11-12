@@ -31,7 +31,7 @@ public class AddingSoftware
         {
 
         }, fakeIdentity);
-        // do something to it.
+        // Post a new piece of software to the catalog
         var responseFromPost = await host.Scenario(api =>
         {
             api.Post
@@ -51,7 +51,7 @@ public class AddingSoftware
         Assert.Equal(requestBody.Name, postResponseModel.Name);
         Assert.Equal(requestBody.Description, postResponseModel.Description);
 
-
+        // Get that newly created piece of software from the API
         var responseFromGet = await host.Scenario(api =>
         {
             api.Get.Url($"/vendors/{vendorId}/catalog/{postResponseModel.Id}");

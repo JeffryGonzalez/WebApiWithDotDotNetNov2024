@@ -1,3 +1,5 @@
+using Marten;
+using Software.Api.Catalog;
 using Software.Api.Configuration;
 
 
@@ -18,6 +20,16 @@ builder.Services.AddAuthorizationBuilder()
         policy.RequireRole("software-center");
     });
 
+var connectionString = builder.Configuration.GetConnectionString("software") ??
+    throw new Exception("No Connection String");
+
+builder.Services.AddMarten(config =>
+{
+    config.Connection(connectionString);
+}).UseLightweightSessions();
+
+
+builder.Services.AddScoped<CatalogManager>(); // 99% of the time you want "Scoped"
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
