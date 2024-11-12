@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace HtTemplate.Catalog;
+namespace Software.Api.Catalog;
 
 public class AddingSoftwareController : ControllerBase
 {

@@ -1,4 +1,4 @@
-﻿namespace HtTemplate.Catalog;
+﻿namespace Software.Api.Catalog;
 
 public record CatalogCreateModel
 {

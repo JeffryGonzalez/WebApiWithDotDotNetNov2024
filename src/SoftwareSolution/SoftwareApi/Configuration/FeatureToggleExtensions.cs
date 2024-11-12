@@ -1,6 +1,6 @@
 using Microsoft.FeatureManagement;
 
-namespace HtTemplate.Configuration;
+namespace Software.Api.Configuration;
 // For more details, see https://timdeschryver.dev/blog/feature-flags-in-net-from-simple-to-more-advanced
 public static class FeatureToggleExtensions
 {

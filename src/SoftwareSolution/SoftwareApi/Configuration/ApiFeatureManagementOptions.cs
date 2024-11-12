@@ -1,4 +1,4 @@
-namespace HtTemplate.Configuration;
+namespace Software.Api.Configuration;
 
 public class ApiFeatureManagementOptions
 {

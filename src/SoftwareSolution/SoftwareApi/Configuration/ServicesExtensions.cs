@@ -3,7 +3,7 @@ using Microsoft.FeatureManagement;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
-namespace HtTemplate.Configuration;
+namespace Software.Api.Configuration;
 public static class ServicesExtensions
 {
     public static WebApplicationBuilder AddCustomFeatureManagement(this WebApplicationBuilder builder)

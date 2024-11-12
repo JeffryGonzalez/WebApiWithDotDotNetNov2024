@@ -1,4 +1,4 @@
-using HtTemplate.Configuration;
+using Software.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

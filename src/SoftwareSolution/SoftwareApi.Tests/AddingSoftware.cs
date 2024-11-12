@@ -1,10 +1,10 @@
 ﻿
 using Alba;
 using Alba.Security;
-using HtTemplate.Catalog;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Time.Testing;
+using Software.Api.Catalog;
 
 namespace SoftwareApi.Tests;
 public class AddingSoftware
