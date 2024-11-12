@@ -31,6 +31,7 @@ builder.Services.AddMarten(config =>
 builder.Services.AddValidatorsFromAssemblyContaining<CatalogCreateModelValidator>();
 
 builder.Services.AddScoped<CatalogManager>(); // 99% of the time you want "Scoped"
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

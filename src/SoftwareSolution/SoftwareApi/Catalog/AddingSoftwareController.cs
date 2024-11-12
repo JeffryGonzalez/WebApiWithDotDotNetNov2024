@@ -26,7 +26,7 @@ public class AddingSoftwareController(CatalogManager catalogManager, ILookupVend
     [Authorize(Policy = "IsSoftwareCenter")]
     public async Task<ActionResult> CanAddSoftware(
         [FromBody] CatalogCreateModel request,
-        [FromRoute] Guid vendorId
+        [FromRoute] Guid vendorId,
         [FromServices] CatalogCreateModelValidator validator
         )
     {
