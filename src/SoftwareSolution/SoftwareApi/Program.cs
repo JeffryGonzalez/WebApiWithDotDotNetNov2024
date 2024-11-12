@@ -1,6 +1,9 @@
 using Software.Api.Configuration;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 builder.AddCustomFeatureManagement();
 
@@ -8,6 +11,12 @@ builder.Services.AddCustomServices();
 builder.Services.AddCustomOasGeneration();
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("IsSoftwareCenter", policy =>
+    {
+        policy.RequireRole("software-center");
+    });
 
 var app = builder.Build();
 

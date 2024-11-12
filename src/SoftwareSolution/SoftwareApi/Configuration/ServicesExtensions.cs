@@ -16,10 +16,11 @@ public static class ServicesExtensions
     public static IServiceCollection AddCustomServices(this IServiceCollection services)
     {
         services.Configure<JsonOptions>(DefaultJsonOptions.Configure);
-        services.AddAuthentication().AddJwtBearer();
+        services.AddAuthentication().AddJwtBearer(); // look in the config for your environment and get the settings.
         services.AddFeatureManagement();
-        services.AddSingleton(() => TimeProvider.System);
-        services.AddHttpContextAccessor();
+        services.AddSingleton(() => TimeProvider.System); // .net 8 and later, a first class abstraction for the clock. 
+        services.AddHttpContextAccessor(); // always on thing for. Scoped services, make the http context available.
+
 
         return services;
     }

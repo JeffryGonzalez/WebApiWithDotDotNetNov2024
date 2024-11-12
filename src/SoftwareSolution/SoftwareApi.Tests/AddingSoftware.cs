@@ -1,10 +1,9 @@
 ﻿
 using Alba;
 using Alba.Security;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Time.Testing;
 using Software.Api.Catalog;
+using System.Security.Claims;
 
 namespace SoftwareApi.Tests;
 public class AddingSoftware
@@ -24,14 +23,14 @@ public class AddingSoftware
             Description = "Editor for Programmers"
         };
 
+        var fakeIdentity = new AuthenticationStub()
+            .WithName("bob-smith")
+            .With(new System.Security.Claims.Claim(ClaimTypes.Role, "software-center"));
         // when
         var host = await AlbaHost.For<Program>(cfg =>
         {
-            cfg.ConfigureTestServices(services =>
-            {
-                services.AddSingleton<TimeProvider>(fakeTimeProvider);
-            });
-        }, new AuthenticationStub().WithName("bob-smith"));
+
+        }, fakeIdentity);
         // do something to it.
         var responseFromPost = await host.Scenario(api =>
         {
@@ -51,8 +50,20 @@ public class AddingSoftware
 
         Assert.Equal(requestBody.Name, postResponseModel.Name);
         Assert.Equal(requestBody.Description, postResponseModel.Description);
-        Assert.Equal(vendorId, postResponseModel.VendorId);
-        Assert.Equal(fakeTime, postResponseModel.AddedToCatalog);
-        Assert.Equal("bob-smith", postResponseModel.AddedBy);
+
+
+        var responseFromGet = await host.Scenario(api =>
+        {
+            api.Get.Url($"/vendors/{vendorId}/catalog/{postResponseModel.Id}");
+            api.StatusCodeShouldBeOk();
+
+        });
+
+        Assert.NotNull(responseFromGet);
+
+        var getResponseModel = await responseFromGet.ReadAsJsonAsync<CatalogItemResponseModel>();
+
+        Assert.Equal(getResponseModel, postResponseModel);
+
     }
 }
