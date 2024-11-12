@@ -1,9 +1,24 @@
-﻿namespace Software.Api.Catalog;
+﻿using FluentValidation;
+
+namespace Software.Api.Catalog;
 
 public record CatalogCreateModel
 {
+
     public string Name { get; init; } = string.Empty;
+
+
     public string Description { get; init; } = string.Empty;
+}
+
+public class CatalogCreateModelValidator : AbstractValidator<CatalogCreateModel>
+{
+    public CatalogCreateModelValidator()
+    {
+        RuleFor(c => c.Name).NotEmpty().MinimumLength(5).MaximumLength(100);
+        RuleFor(c => c.Description).NotEmpty().MinimumLength(10).MaximumLength(1024);
+        //RuleFor(c => c.Name).MustAsync(async (c,x) => await session.Query<CatalogItemEntity>().AnyAsync(i => i.Name == c) == false);
+    }
 }
 
 public record CatalogItemResponseModel

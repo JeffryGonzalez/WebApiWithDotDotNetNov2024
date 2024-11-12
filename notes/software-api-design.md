@@ -38,6 +38,7 @@ Authorization: bearer (with a JWT that says they are in the role of "software-ce
 
 {
  
+    "vendorid": "893898938983983"
     "name": "Visual Studio Code",
     "description": "An editor for programmers"
   

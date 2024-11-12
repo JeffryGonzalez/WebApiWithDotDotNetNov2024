@@ -1,7 +1,10 @@
 ﻿
 using Alba;
 using Alba.Security;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Time.Testing;
+using NSubstitute;
 using Software.Api.Catalog;
 using System.Security.Claims;
 
@@ -29,6 +32,12 @@ public class AddingSoftware
         // when
         var host = await AlbaHost.For<Program>(cfg =>
         {
+            cfg.ConfigureTestServices(services =>
+            {
+                var fakeVendorLookup = Substitute.For<ILookupVendors>();
+                fakeVendorLookup.VendorExistsAsync(vendorId).Returns(true);
+                services.AddScoped<ILookupVendors>(sp => fakeVendorLookup);
+            });
 
         }, fakeIdentity);
         // Post a new piece of software to the catalog

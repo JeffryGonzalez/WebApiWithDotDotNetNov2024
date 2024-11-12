@@ -1,9 +1,8 @@
-﻿using Marten;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace Software.Api.Catalog;
 
-public class AddingSoftwareController(IDocumentSession session, CatalogManager catalogManager) : ControllerBase
+public class AddingSoftwareController(CatalogManager catalogManager, ILookupVendors vendorLookup) : ControllerBase
 {
 
     [HttpGet("/vendors/{vendorId}/catalog/{catalogId}")]
@@ -27,17 +26,30 @@ public class AddingSoftwareController(IDocumentSession session, CatalogManager c
     [Authorize(Policy = "IsSoftwareCenter")]
     public async Task<ActionResult> CanAddSoftware(
         [FromBody] CatalogCreateModel request,
-        [FromRoute] Guid vendorId,
-        [FromServices] TimeProvider timeProvider
+        [FromRoute] Guid vendorId
+        [FromServices] CatalogCreateModelValidator validator
         )
     {
 
-        // validate the references - User identity (Authorize)  - Vendor Id.
-        // validate the body (the owned data) // FluentValidation, DataAttributes, or just write some code.
-        // if those are bad, send appropriate http response messages
+        var validity = await validator.ValidateAsync(request);
+        if (!validity.IsValid)
+        {
+            return BadRequest(); // 400
+        }
 
-        // uh, actually do something with this? do the "unsafe" thing. (add it to the database)
-        CatalogItemResponseModel response = await catalogManager.CreateCatalogItemAsync(request, vendorId);
-        return Ok(response); // 201 Created - with a Location header.
+        if (await vendorLookup.VendorExistsAsync(vendorId))
+        {
+
+            // validate the body (the owned data) // FluentValidation, DataAttributes, or just write some code.
+            // if those are bad, send appropriate http response messages
+
+            // uh, actually do something with this? do the "unsafe" thing. (add it to the database)
+            CatalogItemResponseModel response = await catalogManager.CreateCatalogItemAsync(request, vendorId);
+            return Ok(response); // 201 Created - with a Location header.
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }
