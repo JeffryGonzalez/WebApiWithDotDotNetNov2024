@@ -1,5 +1,6 @@
 namespace SoftwareApi.Tests;
 
+[Trait("Category", "Unit")]
 public class UnitTest1
 {
     [Fact]

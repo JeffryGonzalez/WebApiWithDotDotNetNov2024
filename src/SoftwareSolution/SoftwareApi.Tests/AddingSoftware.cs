@@ -6,6 +6,7 @@ using Software.Api.Catalog;
 using System.Security.Claims;
 
 namespace SoftwareApi.Tests;
+[Trait("Category", "SystemTest")]
 public class AddingSoftware
 {
     [Fact]
@@ -16,7 +17,7 @@ public class AddingSoftware
         var fakeTime = new DateTimeOffset(1969, 4, 20, 23, 59, 59, TimeSpan.FromHours(-5));
         var fakeTimeProvider = new FakeTimeProvider(fakeTime);
 
-        var vendorId = Guid.Parse("7473ee24-54d2-48f4-8e84-d240d65e4b16");
+        var vendorId = Guid.Parse("d18a9612-d16d-44d0-8654-de4bb33730c7"); // Id for Test Data Vendor of Microsoft
         var requestBody = new CatalogCreateModel
         {
             Name = "Visual Studio Code",

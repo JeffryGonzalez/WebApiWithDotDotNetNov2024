@@ -5,6 +5,7 @@ using Software.Api.Vendors;
 using System.Security.Claims;
 
 namespace SoftwareApi.Tests;
+[Trait("Category", "SystemTest")]
 public class AddingVendors
 {
 
