@@ -55,7 +55,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); // a web server up and running and listening for requests.
+
 
 public partial class Program { }
 

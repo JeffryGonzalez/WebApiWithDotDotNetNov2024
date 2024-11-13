@@ -1,2 +1,2 @@
 [*.cs]
-dotnet_diagnostic.CA2016.severity = warning
+dotnet_diagnostic.CA2016.severity = error

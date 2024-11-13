@@ -29,10 +29,11 @@ public class VendorsApi(VendorManager vendorManager) : ControllerBase
     /// <returns></returns>
     [HttpGet("/vendors/{id:guid}")]
 
-    public async Task<ActionResult> GetVendorById(Guid id)
+    public async Task<ActionResult> GetVendorById(Guid id, CancellationToken token)
     {
 
-        VendorResponseModel? response = await vendorManager.GetVendorByIdAsync(id);
+
+        VendorResponseModel? response = await vendorManager.GetVendorByIdAsync(id, token);
 
 
         if (response is null)

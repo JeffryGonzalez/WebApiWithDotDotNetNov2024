@@ -22,7 +22,7 @@ public class VendorManager(IDocumentSession session) : Catalog.ILookupVendors
         return response;
     }
 
-    public async Task<VendorResponseModel?> GetVendorByIdAsync(Guid id)
+    public async Task<VendorResponseModel?> GetVendorByIdAsync(Guid id, CancellationToken token)
     {
         return await session.Query<VendorEntity>()
             .Where(v => v.Id == id)
@@ -32,7 +32,7 @@ public class VendorManager(IDocumentSession session) : Catalog.ILookupVendors
                 Name = v.Name,
             })
 
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync(token);
     }
 
     public async Task<IReadOnlyList<VendorResponseModel>> GetAllVendorsAsync()

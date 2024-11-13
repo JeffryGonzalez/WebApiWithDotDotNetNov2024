@@ -16,8 +16,7 @@ public class CatalogManager(IDocumentSession session, TimeProvider timeProvider,
                     Id = c.Id,
                     Description = c.Description,
                     Name = c.Name,
-                })
-                 .SingleOrDefaultAsync();
+                }).SingleOrDefaultAsync();
 
 
     }
