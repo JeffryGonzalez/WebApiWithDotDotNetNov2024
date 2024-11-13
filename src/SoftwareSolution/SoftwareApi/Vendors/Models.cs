@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Software.Api.Vendors;
 
@@ -19,6 +20,13 @@ public class VendorCreateModelValidator : AbstractValidator<VendorCreateModel>
 
 public record VendorResponseModel
 {
+    [Required]
     public Guid Id { get; set; }
+    [Required, MaxLength(255)]
     public string Name { get; init; } = string.Empty;
+}
+
+public class CollectionResponse<T>
+{
+    public IReadOnlyList<T>? Data { get; set; }
 }

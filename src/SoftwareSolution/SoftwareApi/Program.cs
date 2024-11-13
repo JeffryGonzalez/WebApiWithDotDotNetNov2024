@@ -2,6 +2,7 @@ using FluentValidation;
 using Marten;
 using Software.Api.Catalog;
 using Software.Api.Configuration;
+using Software.Api.User;
 using Software.Api.Vendors;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<CatalogCreateModelValidator
 builder.Services.AddScoped<CatalogManager>(); // 99% of the time you want "Scoped"
 builder.Services.AddScoped<VendorManager>();
 builder.Services.AddScoped<ILookupVendors, VendorManager>();
+builder.Services.AddScoped<IProvideUserInformation, UserManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,3 +58,4 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { }
+

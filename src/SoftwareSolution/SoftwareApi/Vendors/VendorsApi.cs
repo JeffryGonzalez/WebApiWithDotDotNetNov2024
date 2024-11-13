@@ -2,10 +2,12 @@
 
 namespace Software.Api.Vendors;
 
+[Produces("application/json")]
 public class VendorsApi(VendorManager vendorManager) : ControllerBase
 {
     [HttpPost("/vendors")]
     [Authorize(Policy = "IsSoftwareManager")]
+
     public async Task<ActionResult> AddVendorAsync([FromBody] VendorCreateModel request, [FromServices] VendorCreateModelValidator validator)
     {
 
@@ -19,7 +21,14 @@ public class VendorsApi(VendorManager vendorManager) : ControllerBase
         return Created($"/vendors/{response.Id}", response);
     }
 
+
+    /// <summary>
+    /// This is how you get a vendor
+    /// </summary>
+    /// <param name="id">The id of the vendor you are looking for</param>
+    /// <returns></returns>
     [HttpGet("/vendors/{id:guid}")]
+
     public async Task<ActionResult> GetVendorById(Guid id)
     {
 
@@ -34,6 +43,16 @@ public class VendorsApi(VendorManager vendorManager) : ControllerBase
         {
             return Ok(response);
         }
+    }
+
+    [HttpGet("/vendors")]
+    public async Task<ActionResult<CollectionResponse<VendorResponseModel>>> GetAllVendors()
+    {
+        IReadOnlyList<VendorResponseModel> data = await vendorManager.GetAllVendorsAsync();
+
+        var response = new CollectionResponse<VendorResponseModel> { Data = data };
+
+        return Ok(response);
     }
 
 }

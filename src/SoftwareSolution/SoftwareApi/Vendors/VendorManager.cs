@@ -1,6 +1,5 @@
 ﻿using Marten;
 
-
 namespace Software.Api.Vendors;
 
 public class VendorManager(IDocumentSession session) : Catalog.ILookupVendors
@@ -34,6 +33,13 @@ public class VendorManager(IDocumentSession session) : Catalog.ILookupVendors
             })
 
             .SingleOrDefaultAsync();
+    }
+
+    public async Task<IReadOnlyList<VendorResponseModel>> GetAllVendorsAsync()
+    {
+        return await session.Query<VendorEntity>()
+             .Select(v => new VendorResponseModel { Id = v.Id, Name = v.Name })
+             .ToListAsync();
     }
 
     async Task<bool> Catalog.ILookupVendors.VendorExistsAsync(Guid vendorId)

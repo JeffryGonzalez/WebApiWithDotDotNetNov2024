@@ -1,8 +1,9 @@
 ﻿using Marten;
+using Software.Api.User;
 
 namespace Software.Api.Catalog;
 
-public class CatalogManager(IDocumentSession session, TimeProvider timeProvider, IHttpContextAccessor contextAccessor)
+public class CatalogManager(IDocumentSession session, TimeProvider timeProvider, IHttpContextAccessor contextAccessor, IProvideUserInformation userInfoProvider)
 {
 
 
@@ -23,10 +24,12 @@ public class CatalogManager(IDocumentSession session, TimeProvider timeProvider,
 
     public async Task<CatalogItemResponseModel> CreateCatalogItemAsync(CatalogCreateModel request, Guid vendorId)
     {
+        var user = await userInfoProvider.GetUserInformationAsync();
+
         var entity = new CatalogItemEntity
         {
             Id = Guid.NewGuid(),
-            AddedBySub = contextAccessor.HttpContext.User.Identity.Name,
+            AddedBySub = user.Id.ToString(),
             Created = timeProvider.GetUtcNow(),
             Name = request.Name,
             VendorId = vendorId,

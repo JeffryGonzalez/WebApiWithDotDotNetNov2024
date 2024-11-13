@@ -9,7 +9,7 @@ namespace SoftwareApi.Tests;
 [Trait("Category", "SystemTest")]
 public class AddingSoftware : IAsyncLifetime
 {
-    private IAlbaHost _host;
+    private IAlbaHost _host = null!;
 
     private PostgreSqlContainer _postgresContainer = new PostgreSqlBuilder()
         .WithImage("jeffrygonzalez/software-test:test-data")
@@ -34,6 +34,7 @@ public class AddingSoftware : IAsyncLifetime
 
 
         // Post a new piece of software to the catalog
+
         var responseFromPost = await _host.Scenario(api =>
         {
             api.Post
@@ -94,6 +95,7 @@ public class AddingSoftware : IAsyncLifetime
 
 
     [Fact]
+
     public async Task NonSoftwareTeamMembersCannotAddItemsToTheCatalog()
     {
         var vendorId = Guid.Parse("d18a9612-d16d-44d0-8634-de4bb33730c7"); // Id for Test Data Vendor of Microsoft
@@ -114,5 +116,16 @@ public class AddingSoftware : IAsyncLifetime
             api.StatusCodeShouldBe(403);
         });
 
+    }
+
+    [Fact]
+    public async Task ModelIsValidated()
+    {
+        var vendorId = Guid.Parse("d18a9612-d16d-44d0-8634-de4bb33730c7");
+        await _host.Scenario(api =>
+        {
+            api.Post.Json(new CatalogCreateModel()).ToUrl($"/vendors/{vendorId}/catalog");
+            api.StatusCodeShouldBe(400); // bad request.
+        });
     }
 }

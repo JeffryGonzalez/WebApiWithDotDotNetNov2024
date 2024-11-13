@@ -12,11 +12,13 @@ public class CatalogValidatorTests
         var validator = new CatalogCreateModelValidator();
         var model = new CatalogCreateModel
         {
-            Name = "Visual Studio Code",
+            Name = "",
             Description = "Editor for Programmers"
         };
         var result = validator.TestValidate(model);
-        result.ShouldNotHaveAnyValidationErrors();
+
+        result.ShouldHaveValidationErrorFor(m => m.Name).WithErrorMessage("Come on Give us a name!");
+        result.ShouldNotHaveValidationErrorFor(m => m.Description);
     }
 
     [Theory, MemberData(nameof(GetValidExamples))]
@@ -52,7 +54,7 @@ public class CatalogValidatorTests
             new CatalogCreateModel() { Name = new string('x',5), Description = new string('X', 1024)}
         };
     }
-    
+
     public static IEnumerable<object[]> GetInValidExamples()
     {
         yield return new object[]
@@ -89,8 +91,8 @@ public class CatalogValidatorTests
             //  name too long.
             new CatalogCreateModel() { Name = "Valid Name Here", Description = new string('X', 1025)}
         };
-        
+
     }
-    
-    
+
+
 }
