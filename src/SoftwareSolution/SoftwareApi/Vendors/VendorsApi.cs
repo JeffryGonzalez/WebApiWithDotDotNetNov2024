@@ -29,7 +29,7 @@ public class VendorsApi(VendorManager vendorManager) : ControllerBase
     /// <returns></returns>
     [HttpGet("/vendors/{id:guid}")]
 
-    public async Task<ActionResult> GetVendorById(Guid id, CancellationToken token)
+    public async Task<ActionResult<string>> GetVendorById(Guid id, CancellationToken token)
     {
 
 

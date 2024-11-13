@@ -55,6 +55,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapTechApi();
+
 app.Run(); // a web server up and running and listening for requests.
 
 
