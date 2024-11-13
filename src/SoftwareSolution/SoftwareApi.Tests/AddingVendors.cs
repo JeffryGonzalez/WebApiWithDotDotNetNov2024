@@ -30,7 +30,7 @@ public class AddingVendors
         {
 
             api.Post.Json(vendorToAdd).ToUrl("/vendors");
-            api.StatusCodeShouldBeSuccess(); // Thank to this PR https://github.com/JasperFx/alba/pull/161
+            api.StatusCodeShouldBe(201); // Thank to this PR https://github.com/JasperFx/alba/pull/161
         });
 
         Assert.NotNull(postResponse);

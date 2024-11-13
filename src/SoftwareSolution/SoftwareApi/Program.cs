@@ -38,6 +38,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<CatalogCreateModelValidator
 
 builder.Services.AddScoped<CatalogManager>(); // 99% of the time you want "Scoped"
 builder.Services.AddScoped<VendorManager>();
+builder.Services.AddScoped<ILookupVendors, VendorManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

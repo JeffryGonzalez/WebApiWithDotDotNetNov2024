@@ -16,7 +16,7 @@ public class VendorsApi(VendorManager vendorManager) : ControllerBase
             return BadRequest();
         }
         var response = await vendorManager.AddVendorAsync(request);
-        return Ok(response);
+        return Created($"/vendors/{response.Id}", response);
     }
 
     [HttpGet("/vendors/{id:guid}")]
