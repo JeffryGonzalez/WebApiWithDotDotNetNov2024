@@ -31,8 +31,9 @@ public static class TechApi
 {
     public static WebApplication MapTechApi(this WebApplication app)
     {
-        app.MapGet("/techs", GetAllTechs);
-        app.MapGet("/techs/{id:guid}/software", GetTechById);
+        var group = app.MapGroup("techs");
+        group.MapGet("", GetAllTechs);
+        group.MapGet("{id:guid}/software", GetTechById);
         return app;
     }
 

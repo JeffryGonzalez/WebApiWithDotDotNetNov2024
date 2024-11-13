@@ -2398,6 +2398,49 @@
         1305,
         67
       ]
+    },
+    {
+      "id": "CLL0RDvNr7HFQz3P2O5fi",
+      "type": "freedraw",
+      "x": 1318,
+      "y": 454,
+      "width": 0.0001,
+      "height": 0.0001,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 289317113,
+      "version": 3,
+      "versionNonce": 915917879,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1731533845630,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0.0001,
+          0.0001
+        ]
+      ],
+      "pressures": [],
+      "simulatePressure": true,
+      "lastCommittedPoint": [
+        0.0001,
+        0.0001
+      ]
     }
   ],
   "appState": {
